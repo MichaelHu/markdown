@@ -48,14 +48,6 @@ quoteblankline ^>[ ]{0,4}\r?\n
 
 ^>                                      { P("LARGERTHAN"); return LARGERTHAN; }
 
-^@s.*                                   { P("SECTION"); 
-                                            yylval.text = strdup(yytext);
-                                            return SECTION; }
-^@vs.*                                  { P("VSECTION"); 
-                                            yylval.text = strdup(yytext);
-                                            return VSECTION; }
-
-
 \\                                      { P("ESCAPE"); BEGIN ESCAPE; }
 <ESCAPE>[\\`*_{}()#+\-.!]               { BEGIN INITIAL; yylval.text = strdup(yytext); P("SPECIALCHAR"); return SPECIALCHAR; }
 <ESCAPE>.                               { BEGIN INITIAL; yylval.text = strdup(yytext); P("SPECIALCHAR"); return SPECIALCHAR; }

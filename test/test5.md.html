@@ -46,29 +46,21 @@
 
 
 
-<section >
-<p>% Guide to BSTR and C String Conversions
+<p>@s
+% Guide to BSTR and C String Conversions
 % hudamin 
 % 2011-07-26</p>
-
-</section>
-<section >
+<p>@s</p>
 <h2> Introduction</h2>
 <p>One of the confusing aspects of Windows programming is managing the conversion of Visual Basic style strings to/from C language style strings.  It isn't that it is so difficult, it is just difficult to remember the details, it is usually not done often, the MSDN documentation so voluminous that it is difficult to find answers to your questions.  But the worst part is that you could perform some typecast that compiles fine, but doesn't work the way you expect.  This results code that doesn't work, and the bugs are hard to track down.  After some experience, you learn to make sure your string conversions are doing what you expect.</p>
-
-</section>
-<section >
-<p>C strings are arrays of characters terminated by a NULL character.  Visual Basic strings differ in that the length of the string preceded the characters in the string.  So a VB string knows it's own length.  In addition, all VB strings are Unicode (16 bits per character).</p>
-
-</section>
-<section >
+<p>@s
+C strings are arrays of characters terminated by a NULL character.  Visual Basic strings differ in that the length of the string preceded the characters in the string.  So a VB string knows it's own length.  In addition, all VB strings are Unicode (16 bits per character).</p>
+<p>@s</p>
 <h2> String Types</h2>
 <p>BSTR/C String conversions are required if:</p>
 <ul><li>You are doing COM programming in C/C++</li>
 <li>You are writing multiple language applications, such as C++ DLL's accessed by Visual Basic applications. </li></ul>
-
-</section>
-<section >
+<p>@s</p>
 <h3> C Language String Types and Classes</h3>
 <p>This article deals with the following C/MFC/ATL string types:</p>
 <ul><li>char/wchar/TCHAR -- The C strings for ANSI and Unicode</li>
@@ -76,9 +68,7 @@
 <li>BSTR -- The Visual Basic string type</li>
 <li>_bstr_t -- A C++ class wrapper for the Visual Basic string type</li>
 <li>CComBSTR -- Yet another C++ class wrapper for the Visual Basic string type used predominately in ATL code</li></ul>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Demo Project</h3>
 <p>The demo project is just an MFC dialog based application with buttons for each type of conversion.  It is built using VC++ 6.0.  It uses a couple of support functions you may find helpful:</p>
 <pre><code>:::cpp
@@ -93,9 +83,7 @@ BSTR GetBSTR()
     return bstr;
 }
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <pre><code>CComBSTR GetComBSTR()
 {
     CComBSTR bstr("This is the test string.");
@@ -116,14 +104,10 @@ void CVbsDlg::ShowBSTR(BSTR bstr)
 
 }
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h2> Conversions</h2>
 <p>So let's get to it.  Here are the conversion techniques:</p>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting BSTR to _bstr_t</h3>
 <pre><code>:::cpp
 // BSTR to _bst_t
@@ -141,9 +125,7 @@ bstrFinal = bstrStart;
 ShowBSTR(bstrFinal);
 
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting a _bstr_t to BSTR</h3>
 <p>You may want to get a BSTR from a _bstr_t class.</p>
 <pre><code>:::cpp
@@ -164,9 +146,7 @@ bstrFinish = bstrStart;
 ShowBSTR(bstrFinish);
 
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting a CComBSTR to BSTR</h3>
 <p>You may want to get a BSTR from a CComBSTR class.</p>
 <pre><code>:::cpp
@@ -185,9 +165,7 @@ bstrFinish = bstrStart.Copy();
 
 ShowBSTR(bstrFinish);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting _bstr_t to CComBSTR</h3>
 <pre><code>:::cpp
 // _bstr_t to CComBSTR
@@ -199,9 +177,7 @@ bstrFinish.AppendBSTR(bstrStart);
 
 ShowBSTR(bstrFinish);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting BSTR to C String</h3>
 <p>*(Note :-  conversion that only works in Unicode)*</p>
 <pre><code>:::cpp
@@ -217,9 +193,7 @@ TCHAR szFinal[255];
 _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrStart);
 AfxMessageBox(szFinal);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <pre><code>_bstr_t bstrIntermediate(bstrStart); // convert to _bstr_t
 CString strFinal;
 
@@ -232,9 +206,7 @@ strFinal.Format(_T("%s"), (LPCTSTR)bstrIntermediate);
 
 AfxMessageBox(strFinal);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting _bstr_t to C String</h3>
 <p>*(this works in both ANSI and Unicode)*</p>
 <pre><code>:::cpp
@@ -246,9 +218,7 @@ _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrStart);
 AfxMessageBox(szFinal);
 
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting CComBSTR to LPCTSTR</h3>
 <p>*(not possible, must go through _bstr_t )*</p>
 <pre><code>:::cpp
@@ -263,9 +233,7 @@ _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrIntermediate);
 
 AfxMessageBox(szFinal);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting LPCTSTR to _bstr_t</h3>
 <p>*(Use a constructor or = operator)*</p>
 <pre><code>:::cpp
@@ -283,9 +251,7 @@ bstrFinal = szStart;
 
 ShowBSTR(bstrFinal);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h3> Converting LPCTSTR to CComBSTR</h3>
 <p>*Use a constructor or CComBSTR::Append function*</p>
 <pre><code>:::cpp
@@ -306,14 +272,9 @@ bstrFinal.Append(szStart);
 
 ShowBSTR(bstrFinal);
 </code></pre>
-
-</section>
-<section >
+<p>@s</p>
 <h2> Conclusion</h2>
 <p>Well I tested all of the conversion in the demo project.  If you need to try others, download the demo for easy modification.  I am sure I will hear if there are any mistakes!</p>
-
-</section>
-
 
 
 
