@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<section >
+<h2> 以下是一个测试文档</h2>
+<p>来自在线markdown文档编辑器：<a href="http://mahua.jser.me">http://mahua.jser.me</a></p>
+<p>![mahua](mahua-logo.jpg)</p>
+
+</section>
+<section >
+<h2>MaHua是什么?</h2>
+<p>一个在线编辑markdown文档的编辑器</p>
+<p>向Mac下优秀的markdown编辑器mou致敬</p>
+
+</section>
+<section >
+<h2>MaHua有哪些功能？</h2>
+<ul><li>方便的<code>导入导出</code>功能<ul><li>直接把一个markdown的文本文件拖放到当前这个页面就可以了</li>
+<li>导出为一个html格式的文件，样式一点也不会丢失</li></ul>
+</li>
+<li>编辑和预览<code>同步滚动</code>，所见即所得（右上角设置）</li>
+<li><code>VIM快捷键</code>支持，方便vim党们快速的操作 （右上角设置）</li>
+<li>强大的<code>自定义CSS</code>功能，方便定制自己的展示</li>
+<li>有数量也有质量的<code>主题</code>,编辑器和预览区域</li>
+<li>完美兼容<code>Github</code>的markdown语法</li>
+<li>预览区域<code>代码高亮</code></li>
+<li>所有选项自动记忆</li></ul>
+
+</section>
+<section >
+<h2>有问题反馈</h2>
+<p>在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流</p>
+<ul><li>邮件(dev.hubo#gmail.com, 把#换成@)</li>
+<li>QQ: 287759234</li>
+<li>weibo: [@草依山](http://weibo.com/ihubo)</li>
+<li>twitter: [@ihubo](http://twitter.com/ihubo)</li></ul>
+
+</section>
+<section >
+<h2>捐助开发者</h2>
+<p>在兴趣的驱动下,写一个<code>免费</code>的东西，有欣喜，也还有汗水，希望你喜欢我的作品，同时也能支持一下。
+当然，有钱捧个钱场（右上角的爱心标志，支持支付宝和PayPal捐助），没钱捧个人场，谢谢各位。</p>
+
+</section>
+<section >
+<h2>感激</h2>
+<p>感谢以下的项目,排名不分先后</p>
+<ul><li>[mou](http://mouapp.com/) </li>
+<li>[ace](http://ace.ajax.org/)</li>
+<li>[jquery](http://jquery.com)</li></ul>
+
+</section>
+<section >
+<h2>关于作者</h2>
+<pre><code>```javascript
+    var ihubo = {
+        nickName  : "草依山",
+        site : "http://jser.me"
+    }
+```</code></pre>
+
+</section>
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+

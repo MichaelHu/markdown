@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<ol><li>This is a list item with two paragraphs.<p>This is the second  paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.</p>
+<pre><code>*   inner list 1 
+*   inner list 1
+*   inner list 1
+
+    1.   inner ordered list 1 
+    2.   inner ordered list 1
+    3.   inner ordered list 1
+</code></pre>
+<ul><li>inner list </li>
+<li>inner list</li>
+<li>inner list<ol><li>inner ordered list 2 </li>
+<li>inner ( ordered ) list 2</li>
+<li>inner ( ordered ) list 2</li>
+<li>[This [link]](http://example.net/) has no title attribute.</li>
+<li>inner ordered list 2<ul><li>inner list 2 </li>
+<li>inner list 2</li>
+<li>inner list 2</li></ul>
+</li></ol>
+<p>codeblock
+codeblock
+codeblock</p>
+</li></ul>
+<p>codeblock
+codeblock
+codeblock</p>
+</li>
+<li>Another item in the same list.</li></ol>
+<p>This is the second paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.</p>
+<pre><code>codeblock
+codeblock
+codeblock
+</code></pre>
+<blockquote><ul><li>code line 1</li>
+<li>code line 2</li>
+<li>code line 3</li></ul></blockquote><blockquote><p> code line 4</p></blockquote><blockquote><ul><li>code line 5</li></ul></blockquote>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+

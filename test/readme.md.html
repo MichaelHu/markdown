@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<h1> markdown_pro说明</h1>
+<h2> 1. 前言</h2>
+<p>markdown是基于lex-yacc (flex-bison)编写的C解析器，其解析的语法是<a href="http://daringfireball.net/projects/markdown/" target="_blank">markdown语法</a>的一个子集。</p>
+<p>提供了两个版本：</p>
+<ul><li>markdown，提供块级元素解析和內联级元素解析</li>
+<li>markdown_pro，只提供块级元素解析，内联级元素只提供code解析</li></ul>
+<p>使用场景：</p>
+<ul><li>markdown，适用于严格进行字符转义的文档</li>
+<li>markdown_pro，适用于绝大部分编写随意的文档</li></ul>
+<h2> 2. 标签支持能力</h2>
+<ol><li>支持的元素：<ul><li>主要针对块级元素进行解析，包含p, h1-h6, ul, ol, blockquote </li>
+<li>內联元素只处理了code </li></ul>
+</li>
+<li>常规markdown內联元素的支持不包含在此实现中，原因是基于lex & yacc对语法的严格要求，不适合markdown语法的随意性，会出现非常多的syntax error，而error handling很不容易实现。<p>比如內联元素a, img等，编写时，直接写其HTML格式，如下：</p>
+<pre><code>&lt;a href="url">
+    title
+&lt;/a>
+&lt;img src="url">
+</code></pre>
+</li>
+<li>支持多级嵌套列表</li>
+<li>支持嵌套代码段</li>
+<li>其他HTML标签，直接编写，如：<pre><code>&lt;table>&lt;tr>&lt;td>1&lt;/td>&lt;/tr>&lt;/table>
+&lt;script type="text/javascript" src="./markdown.js">&lt;/script>
+</code></pre>
+</li></ol>
+<h2> 3. 语法说明 </h2>
+<h3> 3.1 h1-h6</h3>
+<p>语法：</p>
+<pre><code># h1 text 
+## h2 text
+### h3 text
+#### h4 text
+##### h5 text
+###### h6 text
+</code></pre>
+<p>会产生以下输出：</p>
+<pre><code>&lt;h1>h1 text&lt;/h1>
+&lt;h2>h2 text&lt;/h2>
+&lt;h3>h3 text&lt;/h3>
+&lt;h4>h4 text&lt;/h4>
+&lt;h5>h5 text&lt;/h5>
+&lt;h6>h6 text&lt;/h6>
+</code></pre>
+<h3> 3.2 常规段落</h3>
+<p>语法：</p>
+<pre><code>段落1文本
+段落1文本
+
+空行开启新的段落
+段落2文本
+段落2文本
+</code></pre>
+<p>会产生以下输出：</p>
+<pre><code>&lt;p>段落1文本
+段落1文本&lt;/p>
+&lt;p>空行开启新的段落
+段落2文本
+段落2文本&lt;/p>
+</code></pre>
+<h3> 3.3 列表</h3>
+<ul><li>3.3.1 有序列表<p>有序列表由<code>*</code>开始，后接至少一个空格，再接文本 </p>
+<p>语法（有序列表）：</p>
+<pre><code>1. 列表第一项
+2. 列表第二项
+</code></pre>
+<p>会产生以下输出：</p>
+<pre><code>&lt;ol>&lt;li>列表第一项&lt;/li>
+&lt;li>列表第二项&lt;/li>&lt;/ol>
+</code></pre>
+</li>
+<li>3.3.2 无序列表<p>无序列表有<code>数字.</code>开始，后接至少一个空格，再接文本</p>
+<p>语法（无序列表）：</p>
+<pre><code>* 无序列表第一项
+* 无序列表第二项
+</code></pre>
+<p>会产生以下输出：</p>
+<pre><code>&lt;ul>&lt;li>无序列表第一项&lt;/li>
+&lt;li>无序列表第二项&lt;/li>&lt;/ul>
+</code></pre>
+</li>
+<li>3.3.3 嵌套列表<p>在上级列表的基础上，再次缩进四个空格或者一个制表符 </p>
+<p>语法（嵌套列表）：</p>
+<pre><code>* 无序列表第一项
+    1. 嵌套有序列表第一项
+    2. 嵌套有序列表第二项
+* 无序列表第二项
+    1. 嵌套有序列表第一项
+    2. 嵌套有序列表第二项
+</code></pre>
+<p>会产生以下输出：</p>
+<pre><code>&lt;ul>&lt;li>无序列表第一项&lt;ol>&lt;li>嵌套有序列表第一项&lt;/li>
+&lt;li>嵌套有序列表第二项&lt;/li>&lt;/ol>
+&lt;/li>
+&lt;li>无序列表第二项&lt;ol>&lt;li>嵌套有序列表第一项&lt;/li>
+&lt;li>嵌套有序列表第二项&lt;/li>&lt;/ol>
+&lt;/li>&lt;/ul> </code></pre>
+</li></ul>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+

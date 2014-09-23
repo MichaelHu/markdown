@@ -1,0 +1,376 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<p>% 核心类介绍 
+% hdm258i@gmail.com
+% 2013-04-10
+% 基础, webapp框架 </p>
+<h2> 前言</h2>
+<p>rocket提供了一套框架类，本文介绍类库构成、继承关系和接口。</p>
+<h2> 核心类构成</h2>
+<p>框架提供了9个核心类，分别是：</p>
+<ul><li>rocket.router</li>
+<li>rocket.model</li>
+<li>rocket.collection</li>
+<li>rocket.baseview</li>
+<li>rocket.pageview</li>
+<li>rocket.subview</li>
+<li>rocket.globalview</li>
+<li>rocket.subpagemanager</li>
+<li>rocket.subpageview</li></ul>
+<p>类的继承关系以及封装类与第三方MVC类库Backbbone的关系如下图：</p>
+<p>![核心类层次结构](./img/core_classes_hierarchy.png)</p>
+<h2> 核心类使用简单说明 </h2>
+<ul><li>app路由：通过继承rocket.router，提供routes、pageOrder、pageTransition等配置，编写route handler<pre><code>(function($) {
+
+rocket.router.vs = rocket.router.extend({
+
+    // 路由配置
+    routes: {
+        '': 'index'
+        ,'list/:type': 'list'
+    }
+
+    // 页面切换顺序配置
+    ,pageOrder: [
+        'index'
+        , 'list'
+    ]
+
+    // 位置记忆，默认为false，不进行位置记忆
+    ,enablePositionRestore: true
+
+    // 默认页面切换动画
+    ,defaultPageTransition: 'slide'
+
+    // 页面切换动画配置
+    ,pageTransition: {
+
+        'index-list': 'fade'
+
+    }
+
+
+    ,index: function(type) {
+        if(!type) {
+            type = 'focus';
+        }
+
+        this.doAction('index', {
+                type: decodeURIComponent(type)
+        });
+    }
+
+    ,list: function(type) {
+        this.doAction('list', {
+            type: decodeURIComponent(type)
+        });
+    }
+
+}); 
+
+})(Zepto);
+</code></pre>
+</li>
+<li>页面视图控制器，通过继承rocket.pageview<pre><code>(function($) {
+
+rocket.pageview.index = rocket.pageview.extend({
+    el: "#index_page"
+
+    ,init: function(options){
+        var me = this;
+
+        // 创建header子视图
+        me.setup(new rocket.subview.index_header(options, me));
+
+        // 创建content子视图
+        me.setup(new rocket.subview.index_content(options, me));
+    }
+
+    ...
+
+});
+
+})(Zepto);
+
+
+</code></pre>
+</li>
+<li>页面子视图控制器，通过继承rocket.subview；**不直接使用rocket.baseview**<pre><code>(function($) {
+
+rocket.subview.index_content = rocket.subview.extend({
+    el: "#index_page_content"
+
+    ,init: function(options){
+        var me = this;
+
+        me.setup(new rocket.subview.index_content_list(
+            $.extend({}, options),
+            me
+        ));
+
+        me.setup(new rocket.subview.index_content_tuiguang(
+            $.extend({}, options),
+            me
+        ));
+    }
+
+    ,registerEvents: function(){
+        var me = this, ec = me.ec;
+        ec.on("pagebeforechange", me.onpagebeforechange, me);
+    }
+
+    ,onpagebeforechange: function(params){
+        var me = this, 
+            from = params.from,
+            to = params.to,
+            param = params.params;
+
+        if(to == me.ec) {
+            me.$el.show();
+        }
+    }
+
+});
+
+})(Zepto);
+
+</code></pre>
+</li>
+<li>页面模型，通过继承rocket.model或rocket.collection <pre><code>(function($){
+
+rocket.collection.index_news = rocket.collection.extend({
+
+    initialize: function(models, options){
+        var me = this;
+    }
+
+    ,url: function(){
+        return '/index?' + (new Date()).getTime();
+    }
+
+    ,parse: function(resp, xhr){
+        return resp.content;
+    }
+
+});
+
+})(Zepto);
+</code></pre>
+</li>
+<li>全局视图控制器，通过继承rocket.globalview，可直接相应路由事件，持有页面视图控制器，可按需向页面控视图控制器发送事件。<pre><code>(function($){
+
+rocket.globalview.sidenav = rocket.globalview.extend({
+
+    el: '#sidenav_globalview'
+
+    ,init: function(options){
+        var me = this;
+
+        ...
+    }
+
+    ,registerEvents: function(){
+        var me = this, ec = me.ec;
+
+        ec.on('routechange', me.onroutechange, me);
+        ...
+    }
+
+    ,onroutechange: function(params){
+        var me = this,
+            from = params.from || null,
+            to = params.to || null,
+            fromAction = from &amp;&amp; from.action || null,
+            toAction = to &amp;&amp; to.action || null,
+            pageviews = params.pageviews;
+
+        ...
+    }
+
+    ...
+
+});
+
+})(Zepto);
+
+</code></pre>
+</li>
+<li>子页面管理器，是rocket.subpagemanager的实例，管理子页面的创建、回收、动画切换效果等。使用时rocket.baseview子类通过调用getSubpageManager()方法获取<pre><code>(function($){
+
+rocket.subview.search_content = rocket.subview.extend({
+
+    ...
+
+    ,init: function(options){
+        var me = this,
+            subView,
+            spm;
+
+        spm = me.getSubpageManager({
+            subpageClass: rocket.subpageview.search_subpage
+            ,maxSubpages: 2
+        });
+
+        subView = new rocket.subpageview.search_subpage(
+            $.extend({}, options)
+            ,me
+        );
+
+        me.append(subView);
+        spm.registerSubpage(me.featureString, subView);
+
+    }
+
+    ...
+
+});
+
+})(Zepto);
+</code></pre>
+</li>
+<li>子页面视图控制器，通过继承rocket.subpageview，作为子页面的事件中心，其子视图控制器可以通过subec引用<pre><code>(function($){
+
+rocket.subpageview.search_subpage = rocket.subpageview.extend({
+
+    className: 'search-page-subpage'
+
+    ,noresultTemplate: _.template($('#template_search_subpage_noresult').text())
+
+    ,init: function(options){
+        var me = this;
+
+        ...
+    }
+
+    ,registerEvents: function(){
+        var me = this,
+            ec = me.ec;
+
+        ec.on('keydown', me.onkeydown, me);
+    }
+
+    ,unregisterEvents: function(){
+        var me = this,
+            ec = me.ec;
+
+        ec.off('keydown', me.onkeydown, me);
+    }
+
+    ,onsubpagebeforechange: function(params){
+        var me = this, 
+            from = params.from,
+            to = params.to,
+            param = params.params,
+            featureString = me.getFeatureString(param);
+
+        ...
+    }
+
+    ,onkeydown: function(params){
+        var me = this,
+            e = params.event,
+            targetSubpage = params.targetSubpage,
+            key = e.which,
+            hit = false;
+
+        ...
+    }
+
+});
+
+})(Zepto);
+</code></pre>
+</li></ul>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+

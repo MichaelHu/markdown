@@ -1,0 +1,29 @@
+<p><code>允许直接编写html标签</code>，但需要满足以下条件：</p>
+<ol><li>每行的第一列开始写标签</li>
+<li>所有内容都在一行内完成</li></ol>
+<p>如下所示：</p>
+<pre><code>&lt;table>&lt;tr>&lt;td>1&lt;/td>&lt;td>2&lt;/td>&lt;/tr>&lt;tr>&lt;td>3&lt;/td>&lt;td>4&lt;/td>&lt;/tr>&lt;/table>
+
+&lt;style>body{background-color: #999;}&lt;/style>
+
+&lt;script>console.log(12345);for(var i = 0; i&lt;10; i++){console.log(i);}&lt;/script>
+
+&lt;script type="text/javascript" src="http://wap.baidu.com/static/news/webapp/console/console_fd94d87.js">&lt;/script>
+</code></pre>
+<table><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table>
+
+<style>body{background-color: #999;}</style>
+
+<script>console.log(12345);for(var i = 0; i<10; i++){console.log(i);}</script>
+
+<script type="text/javascript" src="http://wap.baidu.com/static/news/webapp/console/console_fd94d87.js"></script>
+<p>如果要将无序列表包含在div标签内：</p>
+<pre><code>&lt;div>
+* unordered list item 1
+* unordered list item 2
+&lt;/div>
+</code></pre>
+<div>
+<ul><li>unordered list item 1</li>
+<li>unordered list item 2</li></ul>
+</div>

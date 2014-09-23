@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<section >
+<h2> 享受写文档的乐趣</h2>
+<p>hudamin 2014-08-22</p>
+
+</section>
+<section  data-transition="zoom">
+<h3> 文档的作用</h3>
+<ol><li>写文档于己是一种<code>总结和梳理</code></li>
+<li>写文档与他是一种<code>知识分享和传承</code></li></ol>
+
+</section>
+<section  data-transition="fade">
+<h3> 什么会影响我们写文档的体验</h3>
+<ol><li><code>排版</code>：缩进、段落、字号、字体、颜色、源码、图片、链接等</li>
+<li><code>显示面积</code>：强制换行、均匀分布，太不像代码了<p><img src="./img/line-wrap.png"></p>
+</li></ol>
+
+</section>
+<section >
+<ol><li><code>接口文档</code>：<code>字处理软件</code>输出的接口文档很不友好<ul><li>小尾巴，拼写纠正，输入纠正，非等宽字体。—— <code>太智能了，不见得好啊</code><p><img src="./img/code-in-word.png"></p>
+</li>
+<li>图文混排，没法直接拷贝<p><img src="./img/code-in-word-2.png"></p>
+</li></ul>
+</li></ol>
+
+</section>
+<section >
+<ol><li><code>更新</code>：如何保证让他人总能看到最新版的文档？<p><code>甲</code>：那个接口貌似不能用，帮忙看下</p>
+<p><code>乙</code>：好的，我看下，稍等</p>
+<p><code>乙</code>：我这能用啊，你怎么调的？</p>
+<p><code>甲</code>：@＃@＃¥¥＊&&…………（（&……％＃</p>
+<p><code>乙</code>：你的文档太老了，两月前我就更新了，你去下一个</p>
+<p><code>甲</code>：.....</p>
+</li></ol>
+
+</section>
+<section >
+<ol><li><code>分享</code>：U盘？邮件？</li></ol>
+
+</section>
+<section >
+<h3> 技术、技术相关人员怎么写文档</h3>
+<ol><li><code>写代码</code>的方式来写文档：纯文本，格式化</li>
+<li><code>管理代码</code>的方式来管理文档：方便diff</li>
+<li>拥抱<code>云服务</code></li></ol>
+
+</section>
+<section >
+<h3> HTML格式Web文档</h3>
+
+</section>
+<section >
+<h3> 怎么写HTML文档？</h3>
+<ol><li>手写？FE都看着头疼<p><img title="HTML手写" src="./img/write-in-html.png"></p>
+</li>
+<li>编辑工具转存？前提是你还得自己排版</li></ol>
+
+</section>
+<section >
+<h3> 我们希望的方式</h3>
+<ol><li>不直接写HTML标签</li>
+<li>纯文本，格式简单</li>
+<li>输出为HTML文档</li>
+<li>支持主题随意切换</li></ol>
+
+</section>
+<section >
+<h3> markdown</h3>
+<ol><li><code>JOHN GRUBER</code>发明，帮助简单快速编写web文档</li>
+<li>特定格式书写<code>纯文本</code>文档：使用<code>特殊字符和缩进</code>，通过工具就可以<code>转换</code>成美观的HTML文档</li>
+<li>解析器有很多，除了JOHN GRUBER提供的<code>Perl</code>解析器外，互联网上还有很多其他版本的，<p>比如<code>Python</code>版本、<code>Nodejs</code>版本、<code>java</code>版本、<code>C</code>版本等等</p>
+</li>
+<li>新闻文档平台使用的markdown解析器是我前段时间开发的一个基于<code>lex-yacc</code>的编译型C解析器</li></ol>
+
+</section>
+<section >
+<h3> 如何使用markdown写web文档</h3>
+
+</section>
+<section >
+<h3> 例子1：标题＋段落</h3>
+
+</section>
+<section >
+<h2> 一级标题</h2>
+<p>前言：段落一文本</p>
+<h3> 二级标题</h3>
+<p>段落二文本</p>
+<h4> 三级标题</h4>
+<p>段落三文本</p>
+
+</section>
+<section >
+<p><code>写法</code>：</p>
+<pre><code># 一级标题
+前言：段落一文本
+## 二级标题
+段落二文本
+### 三级标题
+段落三文本
+</code></pre>
+
+</section>
+<section >
+<h3> 例子2：标题＋段落＋代码</h1>
+
+</section>
+<section >
+<h4> 以下是一段C代码</h4>
+<p>简介C代码功能</p>
+<pre><code>int i = 0;
+for(;i&lt;10;i++){
+    printf("%d",i);
+}</code></pre>
+<p>总结段落</p>
+
+</section>
+<section >
+<p><code>写法</code>：</p>
+<pre><code>### 以下是一段C代码
+简介C代码功能
+    int i = 0;
+    for(;i&lt;10;i++){
+        printf("%d",i);
+    }
+总结段落</code></pre>
+
+</section>
+<section >
+<h3> 例子3: 多级列表</h3>
+<ul><li><code>新闻PC端</code><ol><li>频道<ul><li>首页</li>
+<li>国内</li>
+<li>互联网</li>
+<li>...</li></ul>
+</li>
+<li>百家<ul><li>首页</li>
+<li>争鸣</li>
+<li>作家页</li>
+<li>...</li></ul>
+</li></ol>
+</li>
+<li><code>新闻无线端</code><ol><li>WEB端<ul><li>WEBAPP<ul><li>Phone WEBAPP<ol><li>新闻WEBAPP</li>
+<li>框版本WEBAPP</li>
+<li>阿拉丁正文</li>
+<li>...</li></ol>
+</li>
+<li>iPad WEBAPP<ol><li>新闻WEBAPP</li>
+<li>阿拉丁正文</li></ol>
+</li></ul>
+</li>
+<li>WAP<ul><li>WML</li>
+<li>触屏版</li></ul>
+</li></ul>
+</li>
+<li>客户端<ul><li>Android客户端</li>
+<li>iOS客户端<ol><li>iPhone/iPod客户端</li>
+<li>iPad客户端</li></ol>
+</li></ul>
+</li></ol>
+</li></ul>
+
+</section>
+<section >
+<p><code>写法</code>：</p>
+<pre><code>* `新闻PC端`
+    1. 频道
+        * 首页
+        * 国内
+        * 互联网
+        * ...
+    2. 百家
+        * 首页
+        * 争鸣
+        * 作家页
+        * ...
+* `新闻无线端`
+    1. WEB端
+        * WEBAPP
+            * Phone WEBAPP
+                1. 新闻WEBAPP
+                2. 框版本WEBAPP
+                3. 阿拉丁正文
+                4. ...
+            * iPad WEBAPP
+                1. 新闻WEBAPP
+                2. 阿拉丁正文
+        * WAP
+            * WML
+            * 触屏版
+    2. 客户端
+        * Android客户端
+        * iOS客户端
+            1. iPhone/iPod客户端
+            2. iPad客户端
+</code></pre>
+
+</section>
+<section >
+<h3> 编写注意事项</h3>
+<ol><li>纯文本编辑器，ultraEdit, notepad++, editplus, webstorm, vim等，<code>不要用</code>word</li>
+<li>保存编码：<code>UTF-8</code></li>
+<li>文件扩展名：<code>.md</code></li></ol>
+
+</section>
+<section >
+<h3> 如何使用百度新闻文档平台 </h3>
+<ol><li>浏览器访问：<code>http://db-news-fe2.vm.baidu.com:8520/docs/</code></li>
+<li>SVN，建立自己的子目录：<code>http://db-news-fe2.vm.baidu.com:8520/svn/newsdocs</code></li>
+<li>本地预览<pre><code>> markdown xxx.md</code></pre>
+</li>
+<li>编辑<code>index.md</code>，添加你的文档到首页</li></ol>
+
+</section>
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+

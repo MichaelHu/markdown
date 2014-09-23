@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="lib/reveal/css/reveal.css">
+		<link rel="stylesheet" href="lib/reveal/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/slides/css/markdown.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/other/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'lib/reveal/css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/other/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+<p>this is H2
+----------</p>
+<h1> <h1 text></h1>
+<h2> h2 text</h2>
+<h3> h3 text</h3>
+<h4> h4 text</h4>
+<h5> h5 text</h5>
+<h6> h6 text</h6>
+<h3> 如何做一个编译器</h3>
+<p>This is [an `example](http://example.com/ "Title") inline link.</p>
+<p>[This link < ](http://example.net/) has no title attribute.</p>
+<p>inline images:</p>
+<h2> raw html</h2>
+<table>
+<tr>
+<td>name</td>
+<td>age</td>
+</tr>
+<tr>
+<td>Michael</td>
+<td>32</td>
+</tr>
+</table>
+<p>![Alt text](/path/to/img.jpg)
+![Alt text](/path/to/img.jpg "Optional title")</p>
+<p>*258i*
+_258i_</p>
+
+<p>**258i**
+__258i__</p>
+
+<p>_**258i**_
+__ **25 8i** __
+** _258i_ **</p>
+
+
+<p>UNIQUE      shift, and go to state 1703 **[\baidu news](http://m.baidu.com)** 241 alter_table_cmd: ADD_P . opt_column columnDef</p>
+
+<ul><li>Red</li>
+<li>Green</li>
+<li>Blue</li>
+<li>Red</li>
+<li>Green: <code>vsprintf(s, "%d::", 1)</code></li>
+<li>Blue</li>
+<li><a href="url">text</a></li>
+<li><img src="url"></li>
+<li>This is [an `example](http://example.com/ "Title") inline link.</li>
+<li>[This link < ](http://example.net/) has no title attribute.</li></ul>
+<ol><li>abc</li>
+<li>Bird</li>
+<li>McHale</li>
+<li><a href="url">text</a></li>
+<li>Parish</li>
+<li>This is [an `example](http://example.com/ "Title") inline link.</li>
+<li>[This link < ](http://example.net/) has no title attribute.</li>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li></ol>
+<p><code>printf("%s", "hello, world!")</code></p>
+<p>Use the <code>printf()</code> function.</p>
+
+<p><code>There is a literal backtick (`) here.</code></p>
+
+<script type="text/javascript">
+
+    document.title = 'hello, markdown.';
+
+</script>
+<pre><code>&lt;script type="text/javascript">
+    document.title = 'hello, markdown.';
+&lt;/script>
+
+  1 #include &lt;stdlib.h>                      
+  2 #include &lt;stdio.h>                       
+  3 #include &lt;string.h>                      
+  4 #include &lt;stdarg.h>
+  5 #include "htmltags.h" 
+  6 
+  7 
+  8 char *str_concat(char *s1, char *s2){    
+  9     char *_str;                          
+ 10 
+ 11     _str = (char *)malloc(strlen(s1) + strlen(s2) + 1);     
+ 12     sprintf(_str, "%s%s", s1, s2);       
+ 13     return _str;                         
+ 14 }
+
+</code></pre>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/reveal/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+                /*
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+                */
+			});
+
+		</script>
+
+	</body>
+</html>
+
