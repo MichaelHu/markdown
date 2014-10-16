@@ -4,14 +4,20 @@
 #include <string.h>
 #include "htmltags.h"
 #include "blocknode.h"
+#include "strbuf.h"
 
 t_blocknode *node_list = NULL, *node_current = NULL;
+t_strbuf *output_buf = NULL; 
 
 /* inner function prototypes */
 void pop_higher_level_blocknode(int level);
 char *blocknode_glue(t_blocknode *top, t_blocknode *current); /* glue two nodes: top level <= current level */
 char *blocknode_close(t_blocknode *node); /* simply close higher-level node */
 char *blocknode_output(t_blocknode *node); /* simply output node content without tags */
+
+void output(char *format, ...);
+
+void remove_extra_blanklines_of_codeblock();
 
 int count_of_char(char *s, char c);
 char *get_open_header(t_blocknode *node);
@@ -31,7 +37,7 @@ void pop_higher_level_blocknode(level){
         && item->indent_level > level){
         blocknode_close(blocknode_pop_stack());
         /*
-        printf("pop tag: %s, level %d\n", get_tag_type(item->tag), item->indent_level);
+        output("pop tag: %s, level %d\n", get_tag_type(item->tag), item->indent_level);
         */
         item = blocknode_top_stack();
     }
@@ -41,12 +47,12 @@ char *blocknode_output(t_blocknode *node){
     switch(node->tag){
 
         case TAG_HTMLBLOCK:
-            printf("%s%s", node->ops[0], node->ops[1]);
+            output("%s%s", node->ops[0], node->ops[1]);
             break;
 
         case TAG_SCRIPTBLOCK:
         case TAG_STYLEBLOCK:
-            printf("%s\n%s\n%s", node->ops[0], node->ops[1], node->ops[2]);
+            output("%s\n%s\n%s", node->ops[0], node->ops[1], node->ops[2]);
             break;
 
         case TAG_UL: 
@@ -55,12 +61,12 @@ char *blocknode_output(t_blocknode *node){
         case TAG_QUOTE_OL:
         case TAG_P:
         case TAG_QUOTE_P:
-            printf("%s", node->ops[1]); 
+            output("%s", node->ops[1]); 
             break;
 
         case TAG_PRE: 
         case TAG_INDENT_PRE:
-            printf("%s", html_escape(node->ops[1])); 
+            output("%s", html_escape(node->ops[1])); 
             break;
 
         case TAG_INDENT_UL:
@@ -68,7 +74,7 @@ char *blocknode_output(t_blocknode *node){
         case TAG_H:
         case TAG_QUOTE_H:
         case TAG_INDENT_P:
-            printf("%s", node->ops[2]); 
+            output("%s", node->ops[2]); 
             break;
 
         /* to be implemented */
@@ -81,7 +87,7 @@ char *blocknode_output(t_blocknode *node){
         case TAG_EOF:
         case TAG_ERROR:
         case TAG_QUOTE_BLANK:
-            printf(""); 
+            output(""); 
             break;
 
     }
@@ -94,26 +100,26 @@ char *blocknode_output(t_blocknode *node){
 char *blocknode_close(t_blocknode *node) {
     switch(node->tag){
 
-        case TAG_SECTION: printf("\n</section>\n"); break;
-        case TAG_VSECTION: printf("\n\t</section>\n</section>\n"); break;
+        case TAG_SECTION: output("\n</section>\n"); break;
+        case TAG_VSECTION: output("\n\t</section>\n</section>\n"); break;
 
-        case TAG_P: printf("</p>"); break;
-        case TAG_OL: printf("</li></ol>"); break;
-        case TAG_UL:  printf("</li></ul>"); break;
-        case TAG_H: printf("</h1>"); break;
-        case TAG_QUOTE_P: printf("</p></blockquote>"); break;
-        case TAG_QUOTE_UL: printf("</li></ul></blockquote>"); break;
-        case TAG_QUOTE_OL: printf("</li></ol></blockquote>"); break;
-        case TAG_QUOTE_H: printf("%s", str_format("%s</blockquote>", get_close_header(node))); break;
+        case TAG_P: output("</p>"); break;
+        case TAG_OL: output("</li></ol>"); break;
+        case TAG_UL:  output("</li></ul>"); break;
+        case TAG_H: output("</h1>"); break;
+        case TAG_QUOTE_P: output("</p></blockquote>"); break;
+        case TAG_QUOTE_UL: output("</li></ul></blockquote>"); break;
+        case TAG_QUOTE_OL: output("</li></ol></blockquote>"); break;
+        case TAG_QUOTE_H: output("%s", str_format("%s</blockquote>", get_close_header(node))); break;
 
-        case TAG_PRE:  printf("</code></pre>"); break;
-        case TAG_INDENT_P: printf("</p>"); break;
-        case TAG_INDENT_UL: printf("</li></ul>"); break;
-        case TAG_INDENT_OL: printf("</li></ol>"); break;
-        case TAG_INDENT_PRE: printf("</code></pre>"); break;
+        case TAG_PRE:  output("</code></pre>"); break;
+        case TAG_INDENT_P: output("</p>"); break;
+        case TAG_INDENT_UL: output("</li></ul>"); break;
+        case TAG_INDENT_OL: output("</li></ol>"); break;
+        case TAG_INDENT_PRE: output("</code></pre>"); break;
 
         /* to be implemented */
-        case TAG_QUOTE_PRE: printf("</code></pre></blockquote>"); break;
+        case TAG_QUOTE_PRE: output("</code></pre></blockquote>"); break;
 
         case TAG_HTMLBLOCK:
         case TAG_SCRIPTBLOCK:
@@ -122,12 +128,12 @@ char *blocknode_close(t_blocknode *node) {
         case TAG_EOF:
         case TAG_ERROR:
         case TAG_QUOTE_BLANK:
-            printf("");
+            output("");
             break;
 
     }
 
-    printf("\n");
+    output("\n");
 
     return "";
 }
@@ -143,14 +149,14 @@ t_blocknode *blocknode_create(t_tag tag, int level, int nops, ...){
     if( ( p = 
             (t_blocknode *)malloc(sizeof(t_blocknode)) ) 
         == NULL){
-        printf("out of memory");
+        fprintf(stderr, "out of memory");
         exit(1);
     }
 
     if( ( p -> ops = 
             (char **)malloc(nops * sizeof(char *)) ) 
         == NULL){
-        printf("out of memory");
+        fprintf(stderr, "out of memory");
         exit(1);
     }
 
@@ -239,7 +245,7 @@ char *blocknode_show(t_blocknode *node){
             break;
     }
 
-    printf("blocknode: %s\n", s);
+    output("blocknode: %s\n", s);
 
     return s;
 }
@@ -250,6 +256,9 @@ char* blocknode_parse(t_blocknode *node){
 
 void blocklist_parse(){
     t_blocknode *p = node_list, *top;
+
+    output_buf = strbuf_create(1024 * 100, 1024 * 50); 
+    // output_buf = strbuf_create(512, 64); 
 
     while(p){
 
@@ -276,6 +285,11 @@ void blocklist_parse(){
         blocknode_show(p);
         */
         p = p->next;
+    }
+
+    if(output_buf -> length){
+        remove_extra_blanklines_of_codeblock();
+        printf("%s", output_buf -> s);
     }
 
 }
@@ -406,7 +420,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
 
             /* error: no tags whose level lower than TAG_EOR */
             case TAG_EOF:
-                printf("stack error\n");
+                fprintf(stderr, "stack error\n");
                 exit(1);
                 break;
 
@@ -455,7 +469,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_BLANK:
                     case TAG_QUOTE_BLANK:
                     case TAG_EOF:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -539,7 +553,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     /* tags with lower level */
                     case TAG_SECTION:
                     case TAG_VSECTION:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -595,7 +609,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -642,7 +656,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -686,7 +700,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -769,7 +783,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -854,7 +868,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -939,7 +953,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1021,7 +1035,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1108,7 +1122,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1191,7 +1205,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1277,7 +1291,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1364,7 +1378,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1407,7 +1421,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
                     case TAG_INDENT_PRE:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1507,7 +1521,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_QUOTE_OL:
                     case TAG_QUOTE_PRE:
                     case TAG_QUOTE_H:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1568,7 +1582,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_QUOTE_OL:
                     case TAG_QUOTE_PRE:
                     case TAG_QUOTE_H:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1630,7 +1644,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_QUOTE_OL:
                     case TAG_QUOTE_PRE:
                     case TAG_QUOTE_H:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1692,7 +1706,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_QUOTE_OL:
                     case TAG_QUOTE_PRE:
                     case TAG_QUOTE_H:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1758,7 +1772,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_P:
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1804,7 +1818,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
                     case TAG_INDENT_P:
                     case TAG_INDENT_UL:
                     case TAG_INDENT_OL:
-                        printf("stack error\n");
+                        fprintf(stderr, "stack error\n");
                         exit(1);
                         break;
 
@@ -1830,7 +1844,7 @@ char *blocknode_glue(t_blocknode *top, t_blocknode *current) {
 
     }
 
-    printf("%s", glue);
+    output("%s", glue);
     return glue;
 }
 
@@ -1888,3 +1902,53 @@ char *get_section_attr(t_blocknode *node){
 
 
 
+void output(char *format, ...){
+    char *_str = NULL;
+    va_list args; 
+
+    _str = (char *)malloc(1000000);     
+    va_start(args, format);
+    vsprintf(_str, format, args); 
+    va_end(args);
+
+    if(_str){
+        strbuf_push(output_buf, _str);
+    }
+}
+
+
+void remove_extra_blanklines_of_codeblock(){
+    char *s, *t;
+    int len, i;
+
+    if(!output_buf){
+        return;
+    }
+
+    s = output_buf -> s;
+
+    while( ( s = strstr( s, "</code></pre>" ) ) ){
+
+        t = s - 1;
+        i = len = s - output_buf -> s;
+
+        while(i > 0){
+
+            if('\r' == *t 
+                || ' ' == *t
+                || '\t' == *t
+                || '\n' == *t){
+                *t = ' ';
+                t--;
+                i--;
+            }
+            else{
+                break;
+            }
+
+        }
+
+        s++;
+
+    }
+}

@@ -81,8 +81,7 @@ BSTR GetBSTR()
     bstr = bstr1.copy();
 
     return bstr;
-}
-</code></pre>
+}  </code></pre>
 <p>@s</p>
 <pre><code>CComBSTR GetComBSTR()
 {
@@ -102,8 +101,7 @@ void CVbsDlg::ShowBSTR(BSTR bstr)
 
     AfxMessageBox(s);
 
-}
-</code></pre>
+}  </code></pre>
 <p>@s</p>
 <h2> Conversions</h2>
 <p>So let's get to it.  Here are the conversion techniques:</p>
@@ -122,9 +120,7 @@ ShowBSTR(bstrFinal);
 // Use the = operator
 bstrFinal = bstrStart;
 
-ShowBSTR(bstrFinal);
-
-</code></pre>
+ShowBSTR(bstrFinal);   </code></pre>
 <p>@s</p>
 <h3> Converting a _bstr_t to BSTR</h3>
 <p>You may want to get a BSTR from a _bstr_t class.</p>
@@ -143,9 +139,7 @@ ShowBSTR(bstrFinish);
 // use = operator
 bstrFinish = bstrStart;
 
-ShowBSTR(bstrFinish);
-
-</code></pre>
+ShowBSTR(bstrFinish);   </code></pre>
 <p>@s</p>
 <h3> Converting a CComBSTR to BSTR</h3>
 <p>You may want to get a BSTR from a CComBSTR class.</p>
@@ -163,8 +157,7 @@ ShowBSTR(bstrFinish);
 // use the Copy member function
 bstrFinish = bstrStart.Copy();
 
-ShowBSTR(bstrFinish);
-</code></pre>
+ShowBSTR(bstrFinish);  </code></pre>
 <p>@s</p>
 <h3> Converting _bstr_t to CComBSTR</h3>
 <pre><code>:::cpp
@@ -175,8 +168,7 @@ CComBSTR bstrFinish;
 
 bstrFinish.AppendBSTR(bstrStart);
 
-ShowBSTR(bstrFinish);
-</code></pre>
+ShowBSTR(bstrFinish);  </code></pre>
 <p>@s</p>
 <h3> Converting BSTR to C String</h3>
 <p>*(Note :-  conversion that only works in Unicode)*</p>
@@ -191,8 +183,7 @@ TCHAR szFinal[255];
 
 // direct conversion from BSTR to LPCTSTR only works in Unicode
 _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrStart);
-AfxMessageBox(szFinal);
-</code></pre>
+AfxMessageBox(szFinal);  </code></pre>
 <p>@s</p>
 <pre><code>_bstr_t bstrIntermediate(bstrStart); // convert to _bstr_t
 CString strFinal;
@@ -204,8 +195,7 @@ _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrIntermediate);
 
 strFinal.Format(_T("%s"), (LPCTSTR)bstrIntermediate);
 
-AfxMessageBox(strFinal);
-</code></pre>
+AfxMessageBox(strFinal);  </code></pre>
 <p>@s</p>
 <h3> Converting _bstr_t to C String</h3>
 <p>*(this works in both ANSI and Unicode)*</p>
@@ -215,9 +205,7 @@ TCHAR szFinal[255];
 
 _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrStart);
 
-AfxMessageBox(szFinal);
-
-</code></pre>
+AfxMessageBox(szFinal);   </code></pre>
 <p>@s</p>
 <h3> Converting CComBSTR to LPCTSTR</h3>
 <p>*(not possible, must go through _bstr_t )*</p>
@@ -231,8 +219,7 @@ TCHAR szFinal[255];
 
 _stprintf(szFinal, _T("%s"), (LPCTSTR)bstrIntermediate);
 
-AfxMessageBox(szFinal);
-</code></pre>
+AfxMessageBox(szFinal);  </code></pre>
 <p>@s</p>
 <h3> Converting LPCTSTR to _bstr_t</h3>
 <p>*(Use a constructor or = operator)*</p>
@@ -249,8 +236,7 @@ ShowBSTR(bstrFinal);
 // or use = operator
 bstrFinal = szStart;
 
-ShowBSTR(bstrFinal);
-</code></pre>
+ShowBSTR(bstrFinal);  </code></pre>
 <p>@s</p>
 <h3> Converting LPCTSTR to CComBSTR</h3>
 <p>*Use a constructor or CComBSTR::Append function*</p>
@@ -270,8 +256,7 @@ ShowBSTR(bstrFinal);
 bstrFinal.Empty();
 bstrFinal.Append(szStart);
 
-ShowBSTR(bstrFinal);
-</code></pre>
+ShowBSTR(bstrFinal);  </code></pre>
 <p>@s</p>
 <h2> Conclusion</h2>
 <p>Well I tested all of the conversion in the demo project.  If you need to try others, download the demo for easy modification.  I am sure I will hear if there are any mistakes!</p>

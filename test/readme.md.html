@@ -63,14 +63,12 @@
 <pre><code>&lt;a href="url">
     title
 &lt;/a>
-&lt;img src="url">
-</code></pre>
+&lt;img src="url"> </code></pre>
 </li>
 <li>支持多级嵌套列表</li>
 <li>支持嵌套代码段</li>
 <li>其他HTML标签，直接编写，如：<pre><code>&lt;table>&lt;tr>&lt;td>1&lt;/td>&lt;/tr>&lt;/table>
-&lt;script type="text/javascript" src="./markdown.js">&lt;/script>
-</code></pre>
+&lt;script type="text/javascript" src="./markdown.js">&lt;/script> </code></pre>
 </li></ol>
 <h2> 3. 语法说明 </h2>
 <h3> 3.1 h1-h6</h3>
@@ -80,16 +78,14 @@
 ### h3 text
 #### h4 text
 ##### h5 text
-###### h6 text
-</code></pre>
+###### h6 text </code></pre>
 <p>会产生以下输出：</p>
 <pre><code>&lt;h1>h1 text&lt;/h1>
 &lt;h2>h2 text&lt;/h2>
 &lt;h3>h3 text&lt;/h3>
 &lt;h4>h4 text&lt;/h4>
 &lt;h5>h5 text&lt;/h5>
-&lt;h6>h6 text&lt;/h6>
-</code></pre>
+&lt;h6>h6 text&lt;/h6> </code></pre>
 <h3> 3.2 常规段落</h3>
 <p>语法：</p>
 <pre><code>段落1文本
@@ -97,35 +93,29 @@
 
 空行开启新的段落
 段落2文本
-段落2文本
-</code></pre>
+段落2文本 </code></pre>
 <p>会产生以下输出：</p>
 <pre><code>&lt;p>段落1文本
 段落1文本&lt;/p>
 &lt;p>空行开启新的段落
 段落2文本
-段落2文本&lt;/p>
-</code></pre>
+段落2文本&lt;/p> </code></pre>
 <h3> 3.3 列表</h3>
 <ul><li>3.3.1 有序列表<p>有序列表由<code>*</code>开始，后接至少一个空格，再接文本 </p>
 <p>语法（有序列表）：</p>
 <pre><code>1. 列表第一项
-2. 列表第二项
-</code></pre>
+2. 列表第二项 </code></pre>
 <p>会产生以下输出：</p>
 <pre><code>&lt;ol>&lt;li>列表第一项&lt;/li>
-&lt;li>列表第二项&lt;/li>&lt;/ol>
-</code></pre>
+&lt;li>列表第二项&lt;/li>&lt;/ol> </code></pre>
 </li>
 <li>3.3.2 无序列表<p>无序列表有<code>数字.</code>开始，后接至少一个空格，再接文本</p>
 <p>语法（无序列表）：</p>
 <pre><code>* 无序列表第一项
-* 无序列表第二项
-</code></pre>
+* 无序列表第二项 </code></pre>
 <p>会产生以下输出：</p>
 <pre><code>&lt;ul>&lt;li>无序列表第一项&lt;/li>
-&lt;li>无序列表第二项&lt;/li>&lt;/ul>
-</code></pre>
+&lt;li>无序列表第二项&lt;/li>&lt;/ul> </code></pre>
 </li>
 <li>3.3.3 嵌套列表<p>在上级列表的基础上，再次缩进四个空格或者一个制表符 </p>
 <p>语法（嵌套列表）：</p>
@@ -134,8 +124,7 @@
     2. 嵌套有序列表第二项
 * 无序列表第二项
     1. 嵌套有序列表第一项
-    2. 嵌套有序列表第二项
-</code></pre>
+    2. 嵌套有序列表第二项 </code></pre>
 <p>会产生以下输出：</p>
 <pre><code>&lt;ul>&lt;li>无序列表第一项&lt;ol>&lt;li>嵌套有序列表第一项&lt;/li>
 &lt;li>嵌套有序列表第二项&lt;/li>&lt;/ol>
