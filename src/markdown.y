@@ -23,12 +23,12 @@ t_tag_info *tag_info;
 
     /* bind with terminater */
 %token <text> TEXT SPECIALCHAR CODETEXT INDENT H QUOTEH HTMLBLOCK SECTION VSECTION SCRIPTSTART SCRIPTEND
-%token <text> STYLESTART STYLEEND
+%token <text> STYLESTART STYLEEND LINK
 %token EXCLAMATION MINUS PLUS RIGHTPARENTHESES LEFTPARENTHESES RIGHTSQUARE LEFTSQUARE
 %token UNDERSCORE STAR BACKTICK BLANKLINE LINEBREAK LARGERTHAN
 %token DOUBLESTAR DOUBLEUNDERSCORE OLSTART ULSTART DOUBLEBACKTICK QUOTEBLANKLINE QUOTEOLSTART QUOTEULSTART
 
-%type <text> inlineelements inlineelement plaintext text_list
+%type <text> inlineelements inlineelement plaintext text_list headertext link
 %type <text> codespan code_list error lines 
 %type <node> line
 
@@ -70,7 +70,7 @@ line:
             $$ = blocknode_create(TAG_VSECTION, -1, 1, $1);
         }
 
-    | H plaintext LINEBREAK {              
+    | H headertext LINEBREAK {              
             tag_check_stack(TAG_H, 0); 
             tag_info = markdown_get_tag_info($2);
             $$ = blocknode_create(
@@ -356,6 +356,24 @@ inlineelement:
     | EXCLAMATION LEFTSQUARE plaintext RIGHTSQUARE LEFTPARENTHESES plaintext RIGHTPARENTHESES {
                                  $$ = create_image($3, $6);
                                 } 
+    | link                      { 
+                                    $$ = $1; 
+                                }
+    ;
+
+headertext:
+    plaintext link                  { $$ = str_concat($1, $2); }
+    | plaintext                     { $$ = $1; }
+    ;
+
+link:                        
+    LINK                            {
+                                        tag_info = markdown_get_tag_info($1);
+                                        $$ = create_link( 
+                                            tag_info -> content
+                                            , html_escape(tag_info -> content) 
+                                        ); 
+                                    }
     ;
 
 plaintext:

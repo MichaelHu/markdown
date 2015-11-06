@@ -1,9 +1,9 @@
 #!/bin/bash
 
-REVEAL="_reveal"
+REVEAL=""
 
-if [ "noreveal" == "$1" ] ; then
-    REVEAL=""
+if [ "reveal" == "$1" ] ; then
+    REVEAL="_reveal"
 fi
 
 find . -type f \

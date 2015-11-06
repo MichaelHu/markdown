@@ -106,6 +106,25 @@ t_tag_info *markdown_get_tag_info(char *s){
             info->content = end + 1;
         }
     }
+    else if (*p 
+        && ( 
+                p == strstr(p, "<http:")
+                || p == strstr(p, "<ftp:")
+                || p == strstr(p, "<mailto:")
+           )
+        ) {
+        end = strstr(p, ">");
+        size = end - p;
+        _str = (char *)malloc(size);
+        memset(_str, 0, size);
+
+        if(size - 2 > 0){
+            /* prefix space */
+            strncpy(_str, p + 1, size - 1);
+        }
+
+        info->content = _str;
+    }
 
     if(config_debug_tag_info){
         fprintf(stderr, "attr: [ %s ], content: [ %s ]\n"

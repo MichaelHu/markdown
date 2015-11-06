@@ -52,28 +52,29 @@
      SCRIPTEND = 268,
      STYLESTART = 269,
      STYLEEND = 270,
-     EXCLAMATION = 271,
-     MINUS = 272,
-     PLUS = 273,
-     RIGHTPARENTHESES = 274,
-     LEFTPARENTHESES = 275,
-     RIGHTSQUARE = 276,
-     LEFTSQUARE = 277,
-     UNDERSCORE = 278,
-     STAR = 279,
-     BACKTICK = 280,
-     BLANKLINE = 281,
-     LINEBREAK = 282,
-     LARGERTHAN = 283,
-     DOUBLESTAR = 284,
-     DOUBLEUNDERSCORE = 285,
-     OLSTART = 286,
-     ULSTART = 287,
-     DOUBLEBACKTICK = 288,
-     QUOTEBLANKLINE = 289,
-     QUOTEOLSTART = 290,
-     QUOTEULSTART = 291,
-     STARX = 292
+     LINK = 271,
+     EXCLAMATION = 272,
+     MINUS = 273,
+     PLUS = 274,
+     RIGHTPARENTHESES = 275,
+     LEFTPARENTHESES = 276,
+     RIGHTSQUARE = 277,
+     LEFTSQUARE = 278,
+     UNDERSCORE = 279,
+     STAR = 280,
+     BACKTICK = 281,
+     BLANKLINE = 282,
+     LINEBREAK = 283,
+     LARGERTHAN = 284,
+     DOUBLESTAR = 285,
+     DOUBLEUNDERSCORE = 286,
+     OLSTART = 287,
+     ULSTART = 288,
+     DOUBLEBACKTICK = 289,
+     QUOTEBLANKLINE = 290,
+     QUOTEOLSTART = 291,
+     QUOTEULSTART = 292,
+     STARX = 293
    };
 #endif
 /* Tokens.  */
@@ -90,28 +91,29 @@
 #define SCRIPTEND 268
 #define STYLESTART 269
 #define STYLEEND 270
-#define EXCLAMATION 271
-#define MINUS 272
-#define PLUS 273
-#define RIGHTPARENTHESES 274
-#define LEFTPARENTHESES 275
-#define RIGHTSQUARE 276
-#define LEFTSQUARE 277
-#define UNDERSCORE 278
-#define STAR 279
-#define BACKTICK 280
-#define BLANKLINE 281
-#define LINEBREAK 282
-#define LARGERTHAN 283
-#define DOUBLESTAR 284
-#define DOUBLEUNDERSCORE 285
-#define OLSTART 286
-#define ULSTART 287
-#define DOUBLEBACKTICK 288
-#define QUOTEBLANKLINE 289
-#define QUOTEOLSTART 290
-#define QUOTEULSTART 291
-#define STARX 292
+#define LINK 271
+#define EXCLAMATION 272
+#define MINUS 273
+#define PLUS 274
+#define RIGHTPARENTHESES 275
+#define LEFTPARENTHESES 276
+#define RIGHTSQUARE 277
+#define LEFTSQUARE 278
+#define UNDERSCORE 279
+#define STAR 280
+#define BACKTICK 281
+#define BLANKLINE 282
+#define LINEBREAK 283
+#define LARGERTHAN 284
+#define DOUBLESTAR 285
+#define DOUBLEUNDERSCORE 286
+#define OLSTART 287
+#define ULSTART 288
+#define DOUBLEBACKTICK 289
+#define QUOTEBLANKLINE 290
+#define QUOTEOLSTART 291
+#define QUOTEULSTART 292
+#define STARX 293
 
 
 
@@ -124,7 +126,7 @@ typedef union YYSTYPE
     t_blocknode *node;
 }
 /* Line 1529 of yacc.c.  */
-#line 128 "markdown.y.h"
+#line 130 "markdown.y.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
