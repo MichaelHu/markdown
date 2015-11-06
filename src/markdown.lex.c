@@ -1423,7 +1423,7 @@ YY_RULE_SETUP
 #line 128 "markdown.lex"
 { 
                                             yylval.text = strdup(yytext); 
-                                            P("HTMLBLOCK.."); 
+                                            P("HTMLBLOCK"); 
                                             BEGIN SHTMLBLOCK; 
                                             return HTMLBLOCK; 
                                         }
